@@ -1,9 +1,10 @@
 require("./db");
+require("dotenv").config({ path: "./env_/.env" });
 const express = require("express");
-const app = express(); 
-const routes = require("./routes/tourRoutes"); 
+const app = express();
+const routes = require("./routes/tourRoutes");
 const bodyParser = require("body-parser");
-/************** Middlewares ****************/ 
+/************** Middlewares ****************/
 app.use(express.json({ limit: "10kb" }));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static("public"));
@@ -17,7 +18,8 @@ app.use((req, res, next) => {
 /************** Routes ****************/
 app.use("/", routes); /*** Application Route ***/
 
-app.listen(4000, function () {
+const port = process.env.PORT || 4000;
+app.listen(port, () => {
   console.log("Server is running on port 4000");
 });
 module.exports = app;
