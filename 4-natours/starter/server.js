@@ -1,14 +1,23 @@
-const dotenv=require('dotenv');
+require("./db");
+const express = require("express");
+const app = express(); 
+const routes = require("./routes/tourRoutes"); 
+const bodyParser = require("body-parser");
+/************** Middlewares ****************/ 
+app.use(express.json({ limit: "10kb" }));
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.static("public"));
 
-dotenv.config({path:'./config.env'})
-const app=require('./app');
-
-
-
-//console.log(app.get('env'));
-//console.log(process.env);
-// ------------------ 4- START SERVER -------------------------
-const port = process.env.PORT || 3000;
-app.listen(port, () => {
-  console.log(`Server is running on port ${port}`);
+app.use((req, res, next) => {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "*");
+  next();
 });
+
+/************** Routes ****************/
+app.use("/", routes); /*** Application Route ***/
+
+app.listen(4000, function () {
+  console.log("Server is running on port 4000");
+});
+module.exports = app;
