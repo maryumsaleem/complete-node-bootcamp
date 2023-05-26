@@ -1,21 +1,21 @@
 const express = require('express');
 const tourController = require('./../controllers/tourController');
-
+const {importData} = require('../dev-data/data/import-dev-data')
 const router = express.Router();
-//param middleware
-//val is value of parameter
-router.param('id',tourController.checkID);
+
 
 //
 router
-  .route('/')
+  .route('/tours')
   .get(tourController.getAllTours)
-  .post(tourController.checkBody,tourController.createTour);
+  .post(tourController.createTour);
 
 router
-  .route('/:id')
+  .route('/tours/:id')
   .get(tourController.getTour)
   .patch(tourController.updateTour)
   .delete(tourController.deleteTour);
 
+
+  router.get('/mario', importData);
 module.exports = router;

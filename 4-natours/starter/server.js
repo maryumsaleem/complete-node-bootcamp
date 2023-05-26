@@ -1,4 +1,5 @@
-require("./db");
+require("./db.js");
+require("./dev-data/data/import-dev-data.js");
 require("dotenv").config({ path: "./env_/.env" });
 const express = require("express");
 const app = express();
@@ -20,6 +21,6 @@ app.use("/", routes); /*** Application Route ***/
 
 const port = process.env.PORT || 4000;
 app.listen(port, () => {
-  console.log("Server is running on port 4000");
+  console.log(`Server is running on port ${port}`);
 });
 module.exports = app;
